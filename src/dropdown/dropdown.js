@@ -10,8 +10,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
   this.open = function(dropdownScope) {
     if (!openScope) {
-      $document.on('click', closeDropdown);
-      $document.on('keydown', keybindFilter);
+      $document.on('click', this.closeDropdown);
     }
 
     if (openScope && openScope !== dropdownScope) {
@@ -24,12 +23,11 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
   this.close = function(dropdownScope) {
     if (openScope === dropdownScope) {
       openScope = null;
-      $document.off('click', closeDropdown);
-      $document.off('keydown', keybindFilter);
+      $document.off('click', this.closeDropdown);
     }
   };
 
-  var closeDropdown = function(evt) {
+  this.closeDropdown = function(evt) {
     // This method may still be called during the same mouse event that
     // unbound this event handler. So check openScope before proceeding.
     if (!openScope) { return; }
@@ -56,16 +54,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
   };
 
-  var keybindFilter = function(evt) {
-    if (evt.which === 27) {
-      openScope.focusToggleElement();
-      closeDropdown();
-    } else if (openScope.isKeynavEnabled() && [38, 40].indexOf(evt.which) !== -1 && openScope.isOpen) {
-      evt.preventDefault();
-      evt.stopPropagation();
-      openScope.focusDropdownEntry(evt.which);
-    }
-  };
 }])
 
 .controller('UibDropdownController', ['$scope', '$element', '$attrs', '$parse', 'uibDropdownConfig', 'uibDropdownService', '$animate', '$uibPosition', '$document', '$compile', '$templateRequest', function($scope, $element, $attrs, $parse, dropdownConfig, uibDropdownService, $animate, $position, $document, $compile, $templateRequest) {
@@ -84,6 +72,19 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     body = $document.find('body');
 
   $element.addClass('dropdown');
+
+  var keybindFilter = function(evt) {
+    if (evt.which === 27 && scope.isOpen) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      scope.focusToggleElement();
+      uibDropdownService.closeDropdown();
+    } else if (scope.isKeynavEnabled() && [38, 40].indexOf(evt.which) !== -1 && scope.isOpen) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      scope.focusDropdownEntry(evt.which);
+    }
+  };
 
   this.init = function() {
     if ($attrs.isOpen) {
@@ -115,6 +116,8 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         self.dropdownMenu.remove();
       });
     }
+
+    $element.on('keydown', keybindFilter);
   };
 
   this.toggle = function(open) {

@@ -68,7 +68,7 @@ describe('uib-dropdown', function() {
     it('should close on escape key & focus toggle element', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 27);
+      triggerKeyDown(element, 27);
       expect(element).not.toHaveClass(dropdownConfig.openClass);
       expect(element.find('a')).toHaveFocus();
     });
@@ -470,7 +470,7 @@ describe('uib-dropdown', function() {
         element = dropdown('disabled');
         $document.find('body').append(element);
         clickDropdownToggle();
-        triggerKeyDown($document, 27);
+        triggerKeyDown(element, 27);
         expect(element).not.toHaveClass(dropdownConfig.openClass);
         expect(element.find('a')).toHaveFocus();
       });
@@ -524,7 +524,7 @@ describe('uib-dropdown', function() {
     it('should focus first list element when down arrow pressed', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var optionEl = element.find('ul').eq(0).find('a').eq(0);
@@ -533,7 +533,7 @@ describe('uib-dropdown', function() {
 
     it('should not focus first list element when down arrow pressed if closed', function() {
       $document.find('body').append(element);
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
 
       expect(element).not.toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
@@ -543,8 +543,8 @@ describe('uib-dropdown', function() {
     it('should focus second list element when down arrow pressed twice', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 40);
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
+      triggerKeyDown(element, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
@@ -564,7 +564,7 @@ describe('uib-dropdown', function() {
     it('should focus last list element when up arrow pressed after dropdown toggled', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 38);
+      triggerKeyDown(element, 38);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
@@ -585,10 +585,10 @@ describe('uib-dropdown', function() {
     it('should focus first list element when down arrow pressed 2x and up pressed 1x', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 40);
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
+      triggerKeyDown(element, 40);
 
-      triggerKeyDown($document, 38);
+      triggerKeyDown(element, 38);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
@@ -598,8 +598,8 @@ describe('uib-dropdown', function() {
     it('should stay focused on final list element if down pressed at list end', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 40);
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
+      triggerKeyDown(element, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
@@ -614,13 +614,13 @@ describe('uib-dropdown', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
 
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
       expect(focusEl).toHaveFocus();
 
-      triggerKeyDown($document, 27);
+      triggerKeyDown(element, 27);
       expect(element).not.toHaveClass(dropdownConfig.openClass);
     });
 
@@ -636,7 +636,7 @@ describe('uib-dropdown', function() {
       it('should focus first list element when down arrow pressed', function() {
         clickDropdownToggle();
 
-        triggerKeyDown($document, 40);
+        triggerKeyDown(element, 40);
 
         var dropdownMenu = $document.find('#dropdown-menu');
 
@@ -647,8 +647,8 @@ describe('uib-dropdown', function() {
 
       it('should focus second list element when down arrow pressed twice', function() {
         clickDropdownToggle();
-        triggerKeyDown($document, 40);
-        triggerKeyDown($document, 40);
+        triggerKeyDown(element, 40);
+        triggerKeyDown(element, 40);
 
         var dropdownMenu = $document.find('#dropdown-menu');
 
