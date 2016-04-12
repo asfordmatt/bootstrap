@@ -75,7 +75,7 @@ describe('uib-dropdown', function() {
 
     it('should not close on backspace key', function() {
       clickDropdownToggle();
-      triggerKeyDown($document, 8);
+      triggerKeyDown(element, 8);
       expect(element).toHaveClass(dropdownConfig.openClass);
     });
 
@@ -556,7 +556,7 @@ describe('uib-dropdown', function() {
       clickDropdownToggle();
       expect(element).toHaveClass(dropdownConfig.openClass);
 
-      triggerKeyDown($document, 38);
+      triggerKeyDown(element, 38);
       var focusEl = element.find('ul').eq(0).find('a').eq(0);
       expect(focusEl).not.toHaveFocus();
     });
@@ -574,7 +574,7 @@ describe('uib-dropdown', function() {
     it('should not change focus when other keys are pressed', function() {
       $document.find('body').append(element);
       clickDropdownToggle();
-      triggerKeyDown($document, 37);
+      triggerKeyDown(element, 37);
 
       expect(element).toHaveClass(dropdownConfig.openClass);
       var focusEl = element.find('ul').eq(0).find('a');
@@ -605,7 +605,7 @@ describe('uib-dropdown', function() {
       var focusEl = element.find('ul').eq(0).find('a').eq(1);
       expect(focusEl).toHaveFocus();
 
-      triggerKeyDown($document, 40);
+      triggerKeyDown(element, 40);
       expect(focusEl).toHaveFocus();
     });
 
